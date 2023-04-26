@@ -20,15 +20,41 @@ reword confusing descriptions in a way that makes sense to you.
 #### What problem does Kafka help solve? Use a specific use case in your answer 
 * Helpful resource: [Confluent Motivations and Use Cases](https://youtu.be/BsojaA1XnpM)
 
+Kafka enables high throughput processing, is distributed and scalable, supports high-performance, is durable, 
+and supports a publish-subscribe mechanism. Used for:
+* **Messaging** - In comparison to most messaging systems Kafka has better throughput, built-in partitioning, replication, and 
+fault-tolerance which makes it a good solution for large scale message processing applications. Example: 
+online store that tracks purchases and update the available inventory.
+* **Website Activity Tracking** - Publishing site activity to central topics with one topic per activity such as 
+page views, searches, login info and etc., which are available realtime and loading into offline data warehousing
+systems for offline processing and reporting. Example: 
+* **Metrics** - Used for operational monitoring data which involves aggregating statistics from distributed applications
+to produce centralized feeds of operational data
+* **Log Aggregation** - can be used to collect physical log files off servers and place them in central place for
+processing. Log Aggregation is the practice of collecting logs from across the enterprise (applications, databases, 
+infrastructure components, etc.) into a single centralized logging platform. 
+* **Stream Processing** - Many users of Kafka process data in processing pipelines consisting of multiple stages, where raw input 
+data is consumed from Kafka topics and then aggregated, enriched, or otherwise transformed into new topics for further 
+consumption or follow-up processing.
+* **Event Sourcing** - can be used to log state changes as a time-ordered sequence of records.
+* **Commit Log** - can be used as external commit-log for a distributed system, which helps replicate data between
+nodes and acts as a re-syncing mechanism for failed nodes to restore their data
+
 #### What is Kafka?
-* Helpful resource: [Kafka in 6 minutes](https://youtu.be/Ch5VhJzaoaI) 
+* Helpful resource: [Kafka in 6 minutes](https://youtu.be/Ch5VhJzaoaI) \n
+* Kafka is distributed platform from sources and streams to many persistent targets/consumers in realtime. 
+Kafka ingest data from multiple producer systems and application and makes the data available to multiple consumer
+and application. Kafka 
 
 #### Describe each of the following with an example of how they all fit together: 
- * Topic
- * Producer
- * Consumer 
- * Broker
- * Partition
+ * Topic - method to categorize and store data. It is a specific stream of data. topic is split into partitions 
+that enable topic to be distributed across various nodes.
+ * Producer - client application that push events to topic
+ * Consumer - client applications that read and process the events for Kafka partitions
+ * Broker - A kafka serverj
+ * Partition - mechanism that distributes data across multiple storage servers. Messages are indexed and stored 
+together with a timestamp and ordered by the position of the message with a partition. Partitions are distributed 
+across a node cluster and are replicated to multiple servers to ensure that Apache Kafka delivers message streams in a fault-tolerant manner.
 
 #### Describe Kafka Producers and Consumers
 

@@ -24,24 +24,31 @@ object KafkaHomework {
   def main(args: Array[String]): Unit = {
 
     // Create the KafkaConsumer
-    //TODO: Write in a comment what these lines are doing. What are the properties necessary to instantiate a consumer?
+    //TODO: Write in a comment what these lines are doing. What are the properties necessary to instantiate a consumer? -DONE
+    //capturing Kafka cluster metadata
+    //Instantiate a consumer with key of String and Value of String
     val properties = getProperties(BOOTSTRAP_SERVER)
     val consumer: KafkaConsumer[String, String] = new KafkaConsumer[String, String](properties)
 
 
     //TODO: What does this line mean? Write your answer in a comment below
+    //why need to convert the Topic to a List? my question
+    //subscribe ro consumer topic
     consumer.subscribe(Arrays.asList(Topic))
 
     while (true) {
-      // TODO: Change this to be every 5 seconds
-      val duration: Duration = Duration.ofMillis(100)
+      // TODO: Change this to be every 5 seconds -DONE
+      val duration: Duration = Duration.ofMillis(5000)
 
-      //TODO: Look up the ConsumerRecords class below, in your own words what is the class designed to do?
+      //TODO: Look up the ConsumerRecords class below, in your own words what is the class designed to do? -DONE
+      //the class retrieves and removes the element at the head of the Consumer list of the there is an element of the Consumer with the given duration, else to return 'Null'.
+      // The retrieved data is written to message with the Key as String and the Value as String
       val records: ConsumerRecords[String, String] = consumer.poll(duration)
 
       records.forEach((record: ConsumerRecord[String, String]) => {
         // Retrieve the message from each record
-        //TODO: Describe why we need the .value() at the end of record
+        //TODO: Describe why we need the .value() at the end of record -DONE
+        //to accept any type of record value?
         val message = record.value()
 
         //TODO: If you were given the values for the bootstrap servers in class, run the app with the green play button and make sure it runs successfully. You should see message(s) printing out to the screen

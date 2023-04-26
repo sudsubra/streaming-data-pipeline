@@ -18,7 +18,6 @@ val capitals = Map(
   "Connecticut" -> "Hartford"
 )
 
-
 states.get("AL").flatMap(capitals.get).map(_.toUpperCase)
 
 

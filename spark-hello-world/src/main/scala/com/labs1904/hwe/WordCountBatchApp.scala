@@ -1,7 +1,7 @@
 package com.labs1904.hwe
 
 import org.apache.log4j.Logger
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Dataset, SparkSession}
 import org.apache.spark.sql.functions._
 
 object WordCountBatchApp {
@@ -21,11 +21,17 @@ object WordCountBatchApp {
       val sentences = spark.read.csv("src/main/resources/sentences.txt").as[String]
       sentences.printSchema
 
-      // TODO: implement me
+      // TODO: implement me}
+      val words:Dataset[String] = sentences.flatMap(s => splitSentenceIntoWords(s))
+      //words.show(truncate = false)
 
-      //val counts = ???
+//      val wordMap = words.map(word => (word ->1))
+      val wordsCount = words.groupBy(col("value")).count()
+      //wordsCount.show(truncate = false)
 
-      //counts.foreach(wordCount=>println(wordCount))
+      val counts = wordsCount.sort(col("count").desc)
+      counts.foreach(wordCount=>println(wordCount))
+
     } catch {
       case e: Exception => logger.error(s"$jobName error in main", e)
     }
@@ -33,6 +39,9 @@ object WordCountBatchApp {
 
   // TODO: implement this function
   // HINT: you may have done this before in Scala practice...
-  def splitSentenceIntoWords(sentence: String): Array[String] = ???
+  def splitSentenceIntoWords(sentence: String): Array[String] = {
+    val eachWord = sentence.split(" ")
+    eachWord
+  }
 
 }
