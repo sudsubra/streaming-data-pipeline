@@ -5,7 +5,7 @@ import org.apache.kafka.common.serialization.StringSerializer
 import org.apache.log4j.Logger
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Dataset, SparkSession}
 
 import java.util.Properties
 
@@ -17,15 +17,15 @@ object WordCountStreamingApp {
   val jobName = "WordCountStreamingApp"
   // TODO: define the schema for parsing data from Kafka
 
-  val bootstrapServer : String = "CHANGEME"
-  val username: String = "CHANGEME"
-  val password: String = "CHANGEME"
+  val bootstrapServer : String = "b-3-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-2-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-1-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196"
+  val username: String = "1904labs"
+  val password: String = "1904labs"
   val Topic: String = "word-count"
 
   //Use this for Windows
-  //val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+  val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
   //Use this for Mac
-  val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
+  //val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
 
   def main(args: Array[String]): Unit = {
     logger.info(s"$jobName starting...")
@@ -59,7 +59,14 @@ object WordCountStreamingApp {
       sentences.printSchema
 
       // TODO: implement me
-      //val counts = ???
+      def splitSentenceIntoWords(sentence: String): Array[String] = {
+        val eachWord = sentence.split(" ")
+        eachWord
+      }
+      val words: Dataset[String] = sentences.flatMap(s => splitSentenceIntoWords(s))
+      val wordsCount = words.groupBy(col("value")).count()
+      //wordsCount.show(truncate = false)
+      val counts = wordsCount.sort(col("count").desc)
 
       val query = sentences.writeStream
         .outputMode(OutputMode.Append())

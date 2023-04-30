@@ -23,6 +23,8 @@ reword confusing descriptions in a way that makes sense to you.
 * [Overivew of Apache Spark](https://www.youtube.com/watch?v=znBa13Earms&t=42s)
 
 #### What is Apache Spark?
+* Cluster computing system for faster and general data processing platform.
+* 
 * Helpful resource: [Spark Overview](https://www.youtube.com/watch?v=ymtq8yjmD9I) 
 
 #### What is distributed data processing? How does it relate to Apache Spark?  

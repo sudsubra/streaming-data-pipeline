@@ -10,20 +10,17 @@ object HelloWorldBatchApp {
   def main(args: Array[String]): Unit = {
     try {
       logger.info(s"$jobName starting...")
-      //TODO: What is a spark session - Why do we need this line?
-
-      // it is the entry point to the Spark SQL. It  provides a way
-      // to interact with various spark's functionality with a lesser number of constructs.
+      //TODO: What is a spark session - Why do we need this line? - done
+        // it is the entry point to the Spark SQL. It  provides a way
+        // to interact with various spark's functionality with a lesser number of constructs.
       val spark = SparkSession.builder()
         .appName(jobName)
         .config("spark.sql.shuffle.partitions", "3")
-        //TODO- What is local[*] doing here?
-
-        // using all local cores
+        //TODO- What is local[*] doing here?- done
+         // using all local cores
         .master("local[*]")
-        //TODO- What does Get or Create do?
-
-        // get existing SparkSession.If not available, creates a new one based on the options set in this builder.
+        //TODO- What does Get or Create do?- done
+          // get existing SparkSession.If not available, creates a new one based on the options set in this builder.
         .getOrCreate()
 
       import spark.implicits._
